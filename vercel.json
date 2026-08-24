@@ -1,0 +1,17 @@
+{
+  "framework": "nextjs",
+  "buildCommand": "npx prisma generate && next build",
+  "installCommand": "pnpm install",
+  "regions": ["sin1"],
+  "crons": [
+    { "path": "/api/cron/review-reminder", "schedule": "0 9 * * *" }
+  ],
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" }
+      ]
+    }
+  ]
+}
