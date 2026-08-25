@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 export const submitReviewSchema = z.object({
+  userId: z.string().min(1, 'User ID is required'),
   purchaseId: z.string().min(1, 'Purchase ID is required'),
   rating: z.number().int().min(1).max(5),
   body: z.string().min(20, 'Review must be at least 20 characters').max(500, 'Review must be under 500 characters'),

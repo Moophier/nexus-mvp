@@ -64,6 +64,6 @@ test.describe('Fragment Discovery', () => {
   test('fragment page loads', async ({ page }) => {
     await page.goto('/fragments');
     await expect(page.locator('h1')).toContainText('知识碎片流');
-    await expect(page.locator('text=来自')).toHaveCount({ gte: 1 });
+    await expect(page.locator('text=来自').first()).toBeVisible();
   });
 });
