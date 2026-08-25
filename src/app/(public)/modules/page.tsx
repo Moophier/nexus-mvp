@@ -1,29 +1,35 @@
-import React from 'react';
 import Link from 'next/link';
+import { Card } from '../../../components/ui/card';
+import { Badge } from '../../../components/ui/badge';
+import { Reveal } from '../../../components/reveal';
 
-export default async function ModulesPage() {
+const modules = [
+  { slug: 'nextjs-14-guide', title: 'Next.js 14 核心指南', price: '¥29.00' },
+  { slug: 'prisma-neon-mastery', title: 'Prisma + Neon Serverless 实践', price: '¥39.00' },
+];
+
+export default function ModulesPage() {
   return (
-    <div className="container mx-auto px-4 py-12">
-      <h1 className="text-3xl font-bold mb-8">知识模块库</h1>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Mock Module Cards */}
-        {[
-          { slug: 'nextjs-14-guide', title: 'Next.js 14 核心指南', price: '¥29', rating: 4.9 },
-          { slug: 'prisma-neon-mastery', title: 'Prisma + Neon Serverless 实践', price: '¥49', rating: 4.8 },
-          { slug: 'auth-mastery', title: 'NextAuth 全方位实战', price: '¥39', rating: 4.7 },
-        ].map(m => (
-          <div key={m.slug} className="p-6 bg-white rounded-xl border border-gray-200 hover:shadow-md transition-shadow">
-            <h3 className="text-xl font-bold mb-2">{m.title}</h3>
-            <div className="flex justify-between items-center mt-4">
-              <span className="text-lg font-semibold">{m.price}</span>
-              <span className="text-sm text-gray-500">⭐ {m.rating}</span>
-            </div>
-            <Link href={`/modules/${m.slug}`} className="block text-center mt-6 py-2 bg-black text-white rounded-lg font-medium">
-              详情与购买
-            </Link>
-          </div>
+    <main className="mx-auto max-w-5xl px-4 py-16">
+      <header className="mb-12">
+        <p className="mb-2 text-xs uppercase tracking-[0.3em] text-gold">Modules</p>
+        <h1 className="font-display text-4xl font-bold text-ink">所有模块</h1>
+      </header>
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+        {modules.map((m) => (
+          <Reveal key={m.slug}>
+            <Card className="card-lift h-full">
+              <div className="flex items-start justify-between">
+                <h2 className="text-xl font-bold text-ink">{m.title}</h2>
+                <Badge>{m.price}</Badge>
+              </div>
+              <Link href={`/modules/${m.slug}`} className="mt-6 inline-block font-medium text-gold hover:underline">
+                查看模块 →
+              </Link>
+            </Card>
+          </Reveal>
         ))}
       </div>
-    </div>
+    </main>
   );
 }
