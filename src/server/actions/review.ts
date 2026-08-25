@@ -29,17 +29,17 @@ export async function submitReviewAction(userId: string, data: any) {
     });
     if (existing) throw new Error('Review already submitted for this purchase');
 
-    const module = await prisma.module.findUnique({
+    const mod = await prisma.module.findUnique({
       where: { id: purchase.moduleId },
     });
-    if (!module) throw new Error('Module not found');
+    if (!mod) throw new Error('Module not found');
 
     // 3. Save Review and Extract Fragments (Synchronous for MVP)
     const review = await prisma.review.create({
       data: {
         purchaseId,
         userId,
-        moduleId: module.id,
+        moduleId: mod.id,
         rating,
         body,
       },
@@ -51,15 +51,15 @@ export async function submitReviewAction(userId: string, data: any) {
         prisma.fragment.create({
           data: {
             reviewId: review.id,
-            moduleId: module.id,
+            moduleId: mod.id,
             quote,
-            link: `/modules/${module.slug}?via=frag_${Math.random().toString(36).substr(2, 5)}`,
+            link: `/modules/${mod.slug}?via=frag_${Math.random().toString(36).substr(2, 5)}`,
           }
         })
       )
     );
 
-    revalidatePath(`/modules/${module.slug}`);
+    revalidatePath(`/modules/${mod.slug}`);
     revalidatePath('/dashboard');
 
     return { success: true, review, fragments };

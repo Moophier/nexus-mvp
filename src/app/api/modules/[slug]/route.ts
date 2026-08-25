@@ -7,7 +7,7 @@ export async function GET(
 ) {
   try {
     const { slug } = params;
-    const module = await prisma.module.findUnique({
+    const mod = await prisma.module.findUnique({
       where: { slug },
       include: {
         author: { select: { name: true, role: true } },
@@ -21,9 +21,9 @@ export async function GET(
       }
     });
 
-    if (!module) return NextResponse.json({ error: 'Module not found' }, { status: 404 });
+    if (!mod) return NextResponse.json({ error: 'Module not found' }, { status: 404 });
 
-    return NextResponse.json(module);
+    return NextResponse.json(mod);
   } catch (error) {
     return NextResponse.json({ error: 'Server error' }, { status: 500 });
   }

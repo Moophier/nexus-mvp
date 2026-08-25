@@ -8,11 +8,11 @@ import { revalidatePath } from 'next/cache';
 export async function purchaseModuleAction(userId: string, moduleId: string) {
   try {
     // 1. Check if module exists and is published
-    const module = await prisma.module.findUnique({
+    const mod = await prisma.module.findUnique({
       where: { id: moduleId },
     });
 
-    if (!module || module.status !== 'PUBLISHED') {
+    if (!mod || mod.status !== 'PUBLISHED') {
       throw new Error('Module not found or not published');
     }
 
@@ -32,7 +32,7 @@ export async function purchaseModuleAction(userId: string, moduleId: string) {
       data: {
         userId,
         moduleId,
-        priceCents: module.priceCents,
+        priceCents: mod.priceCents,
         status: 'PENDING',
         paymentRef: `pay_${nanoid()}`,
       },
@@ -54,14 +54,14 @@ export async function confirmPurchaseAction(userId: string, purchaseId: string) 
       throw new Error('Invalid or already processed purchase');
     }
 
-    const module = await prisma.module.findUnique({
+    const mod = await prisma.module.findUnique({
       where: { id: purchase.moduleId },
     });
 
-    if (!module) throw new Error('Module not found');
+    if (!mod) throw new Error('Module not found');
 
     // 1. Process Mock Payment
-    const payResult = await mockPayment.charge(purchase.paymentRef!, module.priceCents);
+    const payResult = await mockPayment.charge(purchase.paymentRef!, mod.priceCents);
     if (!payResult.ok) throw new Error(payResult.error || 'Payment failed');
 
     // 2. Transactional update: Purchase status + AssetAccount balance + Transaction log
@@ -72,16 +72,16 @@ export async function confirmPurchaseAction(userId: string, purchaseId: string) 
       }),
       prisma.assetAccount.upsert({
         where: { userId },
-        update: { balanceCents: { decrement: module.priceCents } },
-        create: { userId, balanceCents: 0 - module.priceCents }, // Allow negative for MVP
+        update: { balanceCents: { decrement: mod.priceCents } },
+        create: { userId, balanceCents: 0 - mod.priceCents }, // Allow negative for MVP
       }),
       prisma.transaction.create({
         data: {
           userId,
-          amountCents: -module.priceCents,
+          amountCents: -mod.priceCents,
           reason: 'module_purchase',
           refType: 'Module',
-          refId: module.id,
+          refId: mod.id,
         },
       }),
     ]);
