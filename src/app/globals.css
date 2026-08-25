@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --canvas: #0b0b0d;
+  --surface: #16161a;
+  --surface-overlay: #1c1c20;
+  --ink: #e8e6e1;
+  --ink-muted: #9a958c;
+  --gold: #d4a853;
+  --line: #26262b;
+}
+
+@layer base {
+  body {
+    @apply bg-canvas text-ink font-serif antialiased;
+  }
+  ::selection {
+    @apply bg-gold/30 text-ink;
+  }
+}
+
+@layer utilities {
+  .surface {
+    @apply bg-surface border border-line;
+  }
+  .card-lift {
+    @apply transition-transform duration-300 hover:-translate-y-1;
+  }
+  .gold-glow {
+    @apply outline-none focus-visible:shadow-gold;
+  }
+  .reveal {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  .reveal.in {
+    animation: fade-in-up 0.6s ease-out forwards;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
