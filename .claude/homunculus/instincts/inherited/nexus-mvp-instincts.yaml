@@ -1,0 +1,151 @@
+# Instincts generated from https://github.com/Moophier/nexus-mvp
+# Generated: 2026-08-25T01:24:33.420Z
+# Version: 2.0
+# NOTE: This file supplements (does not replace) any existing curated instincts.
+# High-confidence manually curated instincts should be preserved alongside these.
+
+---
+id: nexus-mvp-commit-conventional
+trigger: "when writing a commit message"
+confidence: 0.85
+domain: git
+source: repo-analysis
+source_repo: https://github.com/Moophier/nexus-mvp
+---
+
+# Nexus Mvp Commit Conventional
+
+## Action
+
+Use conventional commit format with prefixes: feat, style, chore, fix, docs
+
+## Evidence
+
+- 16 commits analyzed
+- Detected conventional commit pattern
+- Examples: chore: install deps + add base tsconfig/next-env for Nexus MVP, feat: add cn() class-merge helper with tests
+
+---
+id: nexus-mvp-commit-length
+trigger: "when writing a commit message"
+confidence: 0.6
+domain: git
+source: repo-analysis
+source_repo: https://github.com/Moophier/nexus-mvp
+---
+
+# Nexus Mvp Commit Length
+
+## Action
+
+Write moderate-length commit messages (~58 characters)
+
+## Evidence
+
+- Average commit message length: 58 chars
+- Based on 16 commits
+
+---
+id: nexus-mvp-naming-files
+trigger: "when creating a new file"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/Moophier/nexus-mvp
+---
+
+# Nexus Mvp Naming Files
+
+## Action
+
+Use camelCase naming convention
+
+## Evidence
+
+- Analyzed file naming patterns in repository
+- Dominant pattern: camelCase
+
+---
+id: nexus-mvp-import-relative
+trigger: "when importing modules"
+confidence: 0.75
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/Moophier/nexus-mvp
+---
+
+# Nexus Mvp Import Relative
+
+## Action
+
+Use relative imports for project files
+
+## Evidence
+
+- Import analysis shows relative import pattern
+- Example: import { x } from '../lib/x'
+
+---
+id: nexus-mvp-export-style
+trigger: "when exporting from a module"
+confidence: 0.7
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/Moophier/nexus-mvp
+---
+
+# Nexus Mvp Export Style
+
+## Action
+
+Prefer default exports
+
+## Evidence
+
+- Export pattern analysis
+- Dominant style: default
+
+---
+id: nexus-mvp-arch-type-based
+trigger: "when adding new code"
+confidence: 0.8
+domain: architecture
+source: repo-analysis
+source_repo: https://github.com/Moophier/nexus-mvp
+---
+
+# Nexus Mvp Arch Type Based
+
+## Action
+
+Place code in the appropriate type folder (components/, services/, utils/, etc.)
+
+## Evidence
+
+- Type-based module organization detected
+- Folders: app, components, lib, server
+
+---
+id: nexus-mvp-workflow-feature-development
+trigger: "when implementing a new feature"
+confidence: 0.9
+domain: workflow
+source: repo-analysis
+source_repo: https://github.com/Moophier/nexus-mvp
+---
+
+# Nexus Mvp Workflow Feature Development
+
+## Action
+
+Follow the feature-development workflow:
+1. Add feature implementation
+2. Add tests for feature
+3. Update documentation
+
+## Evidence
+
+- Workflow detected from commit patterns
+- Frequency: ~19x per month
+- Files: /*, src/lib/*, src/app/*
+
